@@ -1,12 +1,12 @@
 _BASE_: "Base-RCNN.yaml"
 MODEL:
-  WEIGHTS: "output/mask_rcnn/550_R_50_3x/model_final.pth"
+  WEIGHTS: "detectron2://ImageNetPretrained/MSRA/R-50.pkl"
   MASK_ON: True
   RESNETS:
     DEPTH: 50
 SOLVER:
   STEPS: (210000, 250000)
-  MAX_ITER: 270000
+  MAX_ITER: 2000
 INPUT:
   MIN_SIZE_TRAIN: (440, 462, 484, 506, 528, 550)
   MAX_SIZE_TRAIN: 916

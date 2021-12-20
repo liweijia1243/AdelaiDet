@@ -55,3 +55,6 @@ demo/demo2.py
 train.sh
 benchmark.sh
 script
+
+train_result/
+train_result_2/

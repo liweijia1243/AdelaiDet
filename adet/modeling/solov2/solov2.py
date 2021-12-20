@@ -561,7 +561,7 @@ class SOLOv2InsHead(nn.Module):
                 ))
                 if norm == "GN":
                     tower.append(nn.GroupNorm(32, self.instance_channels))
-                tower.append(nn.ReLU(inplace=True))
+                tower.append(nn.ReLU(inplace=False))
             self.add_module('{}_tower'.format(head),
                             nn.Sequential(*tower))
 
@@ -703,7 +703,7 @@ class SOLOv2MaskHead(nn.Module):
                 kernel_size=1, stride=1,
                 padding=0, bias=norm is None),
             nn.GroupNorm(32, self.num_masks),
-            nn.ReLU(inplace=True)
+            nn.ReLU(inplace=False)
         )
 
         for modules in [self.convs_all_levels, self.conv_pred]:
@@ -738,7 +738,7 @@ class SOLOv2MaskHead(nn.Module):
                 coord_feat = torch.cat([x, y], 1)
                 mask_feat = torch.cat([mask_feat, coord_feat], 1)
             # add for top features.
-            feature_add_all_level += self.convs_all_levels[i](mask_feat)
+            feature_add_all_level = feature_add_all_level + self.convs_all_levels[i](mask_feat)
 
         mask_pred = self.conv_pred(feature_add_all_level)
         return mask_pred
